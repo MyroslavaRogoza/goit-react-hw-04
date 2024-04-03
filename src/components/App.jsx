@@ -64,7 +64,6 @@ function App() {
   }
 
   function afterOpenModal() {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
 
@@ -74,6 +73,7 @@ function App() {
 
   function selectedImage(image) {
     setModalImage(image);
+    openModal();
   }
 
   return (
@@ -114,11 +114,16 @@ function App() {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
           <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
 
-          <img src={modalImage.url} alt="" width={300} height={400} />
+          <img
+            src={modalImage.url}
+            alt={modalImage.altDescription}
+            width={300}
+            height={400}
+          />
+          <p>{modalImage.description}</p>
+          <p>{modalImage.likes}</p>
         </Modal>
       </div>
     </>

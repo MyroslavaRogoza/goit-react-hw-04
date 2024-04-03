@@ -9,9 +9,11 @@ const ImageCard = ({ cardPhoto, altDesc, selectedImage, item }) => {
         onClick={() =>
           selectedImage({
             url: item.urls.regular,
+            altDescription: alt_description,
             description: item.description,
+            likes: item.likes,
           })
-        }
+            }
       />
     </div>
   );

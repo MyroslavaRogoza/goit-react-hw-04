@@ -5,9 +5,10 @@ const ACCESS_KEY_API = "SzIqucdVyqmxQ4M3MQf_ovhFjZ25_uCrQJMH_iUE9m4";
 //   Authorization: ACCESS_KEY_API,
 // };
 
-export default async function getGalleryByQuery(imageName) {
+export default async function getGalleryByQuery(imageName, page) {
   const data = axiosInstance.get(
-    `https://api.unsplash.com/search/collections?page=1&query=${imageName}&client_id=${ACCESS_KEY_API}`
+    // `https://api.unsplash.com/search/photos?page=1&query=${imageName}&client_id=${ACCESS_KEY_API}`
+    `https://api.unsplash.com/search/photos?page=${page}&query=${imageName}&client_id=${ACCESS_KEY_API}`
   );
   return data;
 }

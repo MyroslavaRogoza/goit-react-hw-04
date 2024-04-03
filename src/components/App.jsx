@@ -7,16 +7,22 @@ import getGalleryByQuery from "../gallery-api";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./ImageModal/ImageModal";
+import Modal from "react-modal";
 
 function App() {
   const [imageName, setImageName] = useState("");
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
-  const [gallery, setGallery] = useState(null);
-  const [loadMore, setLoadMore] = useState(0);
+  const [gallery, setGallery] = useState([]);
+  const [page, setPage] = useState(1);
+  const [modalImage, setModalImage] = useState({});
+
+  function loadMoreCounter() {
+    setPage(page + 1);
+  }
 
   function findImage(image) {
-    console.log(image);
     setImageName(image);
   }
   useEffect(() => {
@@ -24,9 +30,12 @@ function App() {
       try {
         setError(false);
         setLoader(true);
-        const images = await getGalleryByQuery(imageName);
+        // setGallery([]);
+        const images = await getGalleryByQuery(imageName, page);
         console.log(images.data.results);
-        setGallery(images.data.results);
+        setGallery((prevGallery) => {
+          return [...prevGallery, ...images.data.results];
+        });
       } catch {
         setError(true);
       } finally {
@@ -34,15 +43,49 @@ function App() {
       }
     }
     fetchGallery();
-  }, [imageName]);
+  }, [imageName, page]);
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function selectedImage(image) {
+    setModalImage(image);
+  }
 
   return (
     <>
       <SearchBar findImage={findImage} />
-      {gallery && <ImageGallery gallery={gallery} />}
+      {gallery.length > 0 && (
+        <ImageGallery gallery={gallery} selectedImage={selectedImage} />
+      )}
       {loader && <Loader />}
       {error && <ErrorMessage />}
-      {gallery && <LoadMoreBtn />}
+      {gallery.length > 0 && <LoadMoreBtn loadMoreCounter={loadMoreCounter} />}
+      <ImageModal modalImage={modalImage} />
 
       <Toaster
         position="top-right"
@@ -61,6 +104,23 @@ function App() {
           },
         }}
       />
+
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+          <button onClick={closeModal}>close</button>
+          <div>I am a modal</div>
+
+          <img src={modalImage.url} alt="" width={300} height={400} />
+        </Modal>
+      </div>
     </>
   );
 }

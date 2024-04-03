@@ -1,14 +1,14 @@
 import css from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
 
-const ImageGallery = ({ gallery }) => {
+const ImageGallery = ({ gallery , selectedImage}) => {
   return (
     <ul className={css.ImageGallery}>
       {Array.isArray(gallery) &&
-        gallery.map((img) => {
+        gallery.map((item) => {
           return (
-            <li key={img.preview_photos[0].id} className={css.imageItem}>
-              <ImageCard cardPhoto={img.preview_photos[0].urls.small} />
+            <li key={item.id} className={css.imageItem}>
+              <ImageCard cardPhoto={item.urls.small} item={item} selectedImage={selectedImage}/>
             </li>
           );
         })}

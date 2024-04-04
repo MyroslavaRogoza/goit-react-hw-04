@@ -7,12 +7,11 @@ const ImageModal = ({ modalImage, closeModal, modalIsOpen }) => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-    
         ariaHideApp={false}
         className={css.contentStyle}
         style={{
           overlay: {
-            backgroundColor: " rgba(35, 31, 31, 0.8)",
+            backgroundColor: "rgba(35, 31, 31, 0.8)",
           },
         }}
       >

@@ -1,3 +1,5 @@
+import React, { forwardRef } from "react";
+
 const LoadMoreBtn = ({ loadMoreCounter }) => {
   return (
     <button type="button" onClick={loadMoreCounter}>
@@ -7,3 +9,4 @@ const LoadMoreBtn = ({ loadMoreCounter }) => {
 };
 
 export default LoadMoreBtn;
+

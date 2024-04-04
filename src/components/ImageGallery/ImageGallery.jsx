@@ -3,7 +3,7 @@ import ImageCard from "../ImageCard/ImageCard";
 
 const ImageGallery = ({ gallery, selectedImage}) => {
   return (
-    <ul className={css.ImageGallery}>
+    <ul className={css.imageGallery}>
       {Array.isArray(gallery) &&
         gallery.map((item) => {
           return (

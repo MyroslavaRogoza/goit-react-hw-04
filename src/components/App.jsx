@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import SearchBar from "./SearchBar/SearchBar";
 import Loader from "./Loader/Loader";
@@ -8,12 +7,13 @@ import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
+import WarningWindow from "./WarningWindow/WarningWindow";
 
 function App() {
   const [imageName, setImageName] = useState("");
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState(false);
-  const [gallery, setGallery] = useState([]);
+  const [gallery, setGallery] = useState(null);
   const [page, setPage] = useState(1);
   const [modalImage, setModalImage] = useState({});
 
@@ -25,15 +25,16 @@ function App() {
     setImageName(image);
   }
   useEffect(() => {
+    if (imageName.length === 0) return;
     async function fetchGallery() {
       try {
         setError(false);
         setLoader(true);
-        // setGallery([]);
         const images = await getGalleryByQuery(imageName, page);
-        console.log(images.data.results);
+
         setGallery((prevGallery) => {
-          return [...prevGallery, ...images.data.results];
+          if (prevGallery === null) return [...images.data.results];
+          else return [...prevGallery, ...images.data.results];
         });
       } catch {
         setError(true);
@@ -44,24 +45,11 @@ function App() {
     fetchGallery();
   }, [imageName, page]);
 
-  // const customStyles = {
-  //   content: {
-  //     top: "50%",
-  //     left: "50%",
-  //     right: "auto",
-  //     bottom: "auto",
-  //     marginRight: "-50%",
-  //     transform: "translate(-50%, -50%)",
-  //   },
-  // };
-
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
   }
-
-  function afterOpenModal() {}
 
   function closeModal() {
     setIsOpen(false);
@@ -71,40 +59,30 @@ function App() {
     setModalImage(image);
     openModal();
   }
-  // Modal.setAppElement();
+
+  function cleanGallery() {
+    setGallery(null);
+  }
   return (
     <>
-      <SearchBar findImage={findImage} />
-      {gallery.length > 0 && (
-        <ImageGallery gallery={gallery} selectedImage={selectedImage} />
-      )}
-      {loader && <Loader />}
-      {error && <ErrorMessage />}
-      {gallery.length > 0 && <LoadMoreBtn loadMoreCounter={loadMoreCounter} />}
-      <ImageModal modalImage={modalImage} />
-
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-        gutter={10}
-        containerClassName=""
-        containerStyle={{}}
-        toastOptions={{
-          error: {
-            duration: 2000,
-            style: {
-              background: "#1355bf",
-              color: "#fff",
-              fontSize: "12px",
-            },
-          },
-        }}
-      />
-      <ImageModal
-        modalImage={modalImage}
-        closeModal={closeModal}
-        modalIsOpen={modalIsOpen}
-      />
+       
+          <SearchBar findImage={findImage} cleanGallery={cleanGallery} />
+ 
+      <main>
+        {gallery && (
+          <ImageGallery gallery={gallery} selectedImage={selectedImage} />
+        )}
+        {loader && <Loader />}
+        {error && <ErrorMessage />}
+        {gallery && <LoadMoreBtn loadMoreCounter={loadMoreCounter} />}
+        <ImageModal modalImage={modalImage} />
+        <WarningWindow />
+        <ImageModal
+          modalImage={modalImage}
+          closeModal={closeModal}
+          modalIsOpen={modalIsOpen}
+        />
+      </main>
     </>
   );
 }

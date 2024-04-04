@@ -8,7 +8,6 @@ import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
-import Modal from "react-modal";
 
 function App() {
   const [imageName, setImageName] = useState("");
@@ -45,27 +44,24 @@ function App() {
     fetchGallery();
   }, [imageName, page]);
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
+  // const customStyles = {
+  //   content: {
+  //     top: "50%",
+  //     left: "50%",
+  //     right: "auto",
+  //     bottom: "auto",
+  //     marginRight: "-50%",
+  //     transform: "translate(-50%, -50%)",
+  //   },
+  // };
 
-  let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    subtitle.style.color = "#f00";
-  }
+  function afterOpenModal() {}
 
   function closeModal() {
     setIsOpen(false);
@@ -75,7 +71,7 @@ function App() {
     setModalImage(image);
     openModal();
   }
-
+  // Modal.setAppElement();
   return (
     <>
       <SearchBar findImage={findImage} />
@@ -104,28 +100,11 @@ function App() {
           },
         }}
       />
-
-      <div>
-        <button onClick={openModal}>Open Modal</button>
-        <Modal
-          isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
-          onRequestClose={closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <button onClick={closeModal}>close</button>
-
-          <img
-            src={modalImage.url}
-            alt={modalImage.altDescription}
-            width={300}
-            height={400}
-          />
-          <p>{modalImage.description}</p>
-          <p>{modalImage.likes}</p>
-        </Modal>
-      </div>
+      <ImageModal
+        modalImage={modalImage}
+        closeModal={closeModal}
+        modalIsOpen={modalIsOpen}
+      />
     </>
   );
 }

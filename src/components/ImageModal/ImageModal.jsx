@@ -7,10 +7,14 @@ const ImageModal = ({ modalImage, closeModal, modalIsOpen }) => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
+    
         ariaHideApp={false}
         className={css.contentStyle}
-        overlayClasseName={css.overlayStyle}
-        portalClassName={css.overlayStyle}
+        style={{
+          overlay: {
+            backgroundColor: " rgba(35, 31, 31, 0.8)",
+          },
+        }}
       >
         <div className={css.modalWindow}>
           <img
@@ -18,10 +22,11 @@ const ImageModal = ({ modalImage, closeModal, modalIsOpen }) => {
             alt={modalImage.altDescription}
             className={css.modalImage}
           />
+          <div className={css.modalContent}>
+            <p className={css.modalDescription}>{modalImage.description}</p>
+            <p className={css.modalImage}>Likes:{modalImage.likes}</p>
+          </div>
         </div>
-
-        <p>{modalImage.description}</p>
-        <p>{modalImage.likes}</p>
       </Modal>
     </div>
   );

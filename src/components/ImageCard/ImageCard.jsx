@@ -12,6 +12,7 @@ const ImageCard = ({ cardPhoto, altDesc, selectedImage, item }) => {
             altDescription: item.alt_description,
             description: item.description,
             likes: item.likes,
+            author: item.user.name,
           })
         }
       />

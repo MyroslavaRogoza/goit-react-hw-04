@@ -31,7 +31,7 @@ function App() {
         setError(false);
         setLoader(true);
         const images = await getGalleryByQuery(imageName, page);
-
+        console.log(images);
         setGallery((prevGallery) => {
           if (prevGallery === null) return [...images.data.results];
           else return [...prevGallery, ...images.data.results];
@@ -65,8 +65,7 @@ function App() {
   }
   return (
     <>
-       
-          <SearchBar findImage={findImage} cleanGallery={cleanGallery} />
+      <SearchBar findImage={findImage} cleanGallery={cleanGallery} />
       <main>
         {gallery && (
           <ImageGallery gallery={gallery} selectedImage={selectedImage} />

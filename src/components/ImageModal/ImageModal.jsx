@@ -21,12 +21,14 @@ const ImageModal = ({ modalImage, closeModal, modalIsOpen }) => {
             alt={modalImage.altDescription}
             className={css.modalImage}
           />
-        </div>
-        <div className={css.modalContent}>
-          <p className={css.modalDescription}>{modalImage.description}</p>
-          <p className={css.modalImage}>
-            Likes: <span className={css.likesAccent}>{modalImage.likes}</span>
-          </p>
+
+          <div className={css.modalContent}>
+            <p className={css.modalDescription}>{modalImage.description}</p>
+            <p className={css.modalAuthor}>Author: {modalImage.author}</p>
+            <p className={css.modalImage}>
+              Likes: <span className={css.likesAccent}>{modalImage.likes}</span>
+            </p>
+          </div>
         </div>
       </Modal>
     </div>

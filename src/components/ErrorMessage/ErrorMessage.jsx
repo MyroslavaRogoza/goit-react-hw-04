@@ -1,7 +1,7 @@
-
+import css from './ErrorMessage.module.css';
 const ErrorMessage = () => {
   return (
-   <p>Something went wrong...</p>
+   <p className={css.errorMessage}>Something went wrong...</p>
   )
 }
 

@@ -11,8 +11,7 @@ const ImageGallery = ({ gallery, selectedImage}) => {
               <ImageCard
                 cardPhoto={item.urls.small}
                 item={item}
-                selectedImage={selectedImage}
-              
+                selectedImage={selectedImage}              
               />
             </li>
           );

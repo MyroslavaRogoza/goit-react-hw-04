@@ -1,5 +1,5 @@
 #root {
-  /* max-width: 1280px; */
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0;
   text-align: center;
@@ -34,7 +34,7 @@ li {
   padding: 0;
   list-style: none;
 }
-/* 
+
 a {
   color: currentColor;
   text-decoration: none;
@@ -44,9 +44,4 @@ button {
   cursor: pointer;
 }
 
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
- */
+ 

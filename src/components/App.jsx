@@ -67,7 +67,6 @@ function App() {
     <>
        
           <SearchBar findImage={findImage} cleanGallery={cleanGallery} />
- 
       <main>
         {gallery && (
           <ImageGallery gallery={gallery} selectedImage={selectedImage} />

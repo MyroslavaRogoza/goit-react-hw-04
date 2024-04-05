@@ -21,10 +21,12 @@ const ImageModal = ({ modalImage, closeModal, modalIsOpen }) => {
             alt={modalImage.altDescription}
             className={css.modalImage}
           />
-          <div className={css.modalContent}>
-            <p className={css.modalDescription}>{modalImage.description}</p>
-            <p className={css.modalImage}>Likes:{modalImage.likes}</p>
-          </div>
+        </div>
+        <div className={css.modalContent}>
+          <p className={css.modalDescription}>{modalImage.description}</p>
+          <p className={css.modalImage}>
+            Likes: <span className={css.likesAccent}>{modalImage.likes}</span>
+          </p>
         </div>
       </Modal>
     </div>

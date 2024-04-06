@@ -1,16 +1,20 @@
 import css from "./SearchBar.module.css";
 import toast from "react-hot-toast";
 
-const SearchBar = ({ findImage, cleanGallery }) => {
+const SearchBar = ({ findImage, cleanGallery, resetPage }) => {
   function handleSubmit(evt) {
     evt.preventDefault();
     cleanGallery();
     const userInput = evt.currentTarget.elements.imageName.value.trim();
     if (userInput === "")
       return toast.error(<div>Enter text to search for an image</div>);
-    else findImage(userInput);
-    if (userInput === userInput) return;
+    else {
+      resetPage();
+      findImage(userInput);
+    }
+    evt.currentTarget.reset();
   }
+
   return (
     <header className={css.header}>
       <form onSubmit={handleSubmit}>

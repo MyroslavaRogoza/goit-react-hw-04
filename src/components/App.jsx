@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import SearchBar from "./SearchBar/SearchBar";
 import Loader from "./Loader/Loader";
@@ -23,6 +23,9 @@ function App() {
 
   function findImage(image) {
     setImageName(image);
+  }
+  function resetPage() {
+    setPage(1);
   }
   useEffect(() => {
     if (imageName.length === 0) return;
@@ -65,7 +68,11 @@ function App() {
   }
   return (
     <>
-      <SearchBar findImage={findImage} cleanGallery={cleanGallery} />
+      <SearchBar
+        findImage={findImage}
+        cleanGallery={cleanGallery}
+        resetPage={resetPage}
+      />
       <main>
         {gallery && (
           <ImageGallery gallery={gallery} selectedImage={selectedImage} />
@@ -75,11 +82,13 @@ function App() {
         {gallery && <LoadMoreBtn loadMoreCounter={loadMoreCounter} />}
         <ImageModal modalImage={modalImage} />
         <WarningWindow />
-        <ImageModal
-          modalImage={modalImage}
-          closeModal={closeModal}
-          modalIsOpen={modalIsOpen}
-        />
+        {modalIsOpen && (
+          <ImageModal
+            modalImage={modalImage}
+            closeModal={closeModal}
+            modalIsOpen={modalIsOpen}
+          />
+        )}
       </main>
     </>
   );

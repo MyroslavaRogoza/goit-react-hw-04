@@ -1,7 +1,7 @@
 .loadMoreBtn {
   background-color: rgb(5, 23, 94);
   border: 1px solid rgba(13, 249, 245, 0.5);
-  padding: 5px 10px;
+  padding: 8px 12px;
   border-radius: 3px;
   color: whitesmoke;
 }
